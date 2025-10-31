@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Request Materials Dashboard</title>
+
+  <link rel="icon" href="https://i.postimg.cc/C1q4gWPM/images-1.png" />
+
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+  <div class="background-overlay"></div>
+
+  <header class="header">
+
+    <img src="https://i.postimg.cc/C1q4gWPM/images-1.png" alt="Logo" class="logo" />
+
+    <h1 class="title">Request Materials Dashboard</h1>
+
+  </header>
+
+  <main class="dashboard">
+
+    <button class="btn" id="submitRequestBtn">📩 Submit Request</button>
+
+    <button class="btn" id="viewRequestBtn">📋 View Request</button>
+
+    <button class="btn" id="viewDeliveredBtn">🚚 View Delivered Items</button>
+
+    <button class="btn" id="viewRemainingBtn">📦 View Remaining Items</button>
+
+    <button class="btn" id="viewUsageBtn">⚙️ View Usage</button>
+
+    <button class="btn" id="viewHistoryBtn">🕓 View History Usage</button>
+
+  </main>
+
+  <!-- Submit Modal -->
+
+  <div class="modal" id="submitModal" aria-hidden="true">
+
+    <div class="card">
+
+      <h2>Submit Request</h2>
+
+      <label>Personnel</label>
+
+      <select id="personnel">
+
+        <option value="">Select Personnel</option>
+
+        <option>Arnel Tito</option>
+
+        <option>Jessie Yamid</option>
+
+        <option>Roger Castillo</option>
+
+        <option>Aljay Albit</option>
+
+        <option>Roberto Oraiz</option>
+
+        <option>Ricky Saragena</option>
+
+      </select>
+
+      <label>Date</label>
+
+      <input type="text" id="date" readonly />
+
+      <label>Particular</label>
+
+      <input type="text" id="particular" placeholder="e.g. Cement" />
+
+      <label>Unit</label>
+
+      <input type="text" id="unit" placeholder="e.g. Bag / pcs / Gal" />
+
+      <label>Quantity</label>
+
+      <input type="number" id="qty" min="1" placeholder="1" />
+
+      <div class="modal-actions">
+
+        <button class="btn" id="submitDataBtn">Submit</button>
+
+        <button class="btn exit-btn" id="exitModalBtn">Exit</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- View Request Modal -->
+
+  <div class="modal" id="viewRequestModal" aria-hidden="true">
+
+    <div class="card large-card">
+
+      <h2>📋 View Requests</h2>
+
+      <div class="table-wrap">
+
+        <table id="requestsTable">
+
+          <thead>
+
+            <tr>
+
+              <th>Personnel</th>
+
+              <th>Particular</th>
+
+              <th>Unit</th>
+
+              <th>Qty</th>
+
+              <th>Date</th>
+
+              <th>Actions</th><!-- Delete (deletes related delivered & usage too) -->
+
+            </tr>
+
+          </thead>
+
+          <tbody id="requestsTbody"></tbody>
+
+        </table>
+
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:12px;">
+
+        <button class="btn" id="openAddDeliveredFromRequestsBtn">➕ Delivered from Request</button>
+
+        <button class="btn" id="openAddUsageFromRequestsBtn">➕ Usage from Request</button>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button class="btn exit-btn" id="closeRequestsBtn">Exit</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Delivered Modal -->
+
+  <div class="modal" id="deliveredModal" aria-hidden="true">
+
+    <div class="card large-card">
+
+      <h2>🚚 Delivered Items</h2>
+
+      <div style="display:flex; gap:10px; margin-bottom:8px; flex-wrap:wrap;">
+
+        <button class="btn" id="addDeliveredBtn">➕ Add Delivered</button>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table id="deliveredTable">
+
+          <thead>
+
+            <tr>
+
+              <th>Particular</th>
+
+              <th>Unit</th>
+
+              <th>Qty</th>
+
+              <th>Status</th>
+
+              <th>Date Delivered</th>
+
+              <th>Actions</th> <!-- Mark Pending / Mark Completed / Edit -->
+
+            </tr>
+
+          </thead>
+
+          <tbody id="deliveredTbody"></tbody>
+
+        </table>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button class="btn exit-btn" id="closeDeliveredBtn">Exit</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Add/Edit Delivered Modal (select request) -->
+
+  <div class="modal" id="editDeliveredModal" aria-hidden="true">
+
+    <div class="card">
+
+      <h2 id="editDeliveredTitle">Add Delivered</h2>
+
+      <label>Select Request (optional)</label>
+
+      <select id="deliveredRequestSelect"><option value="">-- Select a submitted request --</option></select>
+
+      <label>Particular</label>
+
+      <input id="editDeliveredParticular" />
+
+      <label>Unit</label>
+
+      <input id="editDeliveredUnit" />
+
+      <label>Quantity</label>
+
+      <input id="editDeliveredQty" type="number" min="1" />
+
+      <div class="modal-actions">
+
+        <button class="btn" id="saveDeliveredBtn">Save</button>
+
+        <button class="btn exit-btn" id="cancelEditDeliveredBtn">Cancel</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Remaining / Inventory Modal -->
+
+  <div class="modal" id="remainingModal" aria-hidden="true">
+
+    <div class="card large-card">
+
+      <h2>📦 Remaining Items (Inventory)</h2>
+
+      <div class="table-wrap">
+
+        <table id="remainingTable">
+
+          <thead>
+
+            <tr>
+
+              <th>Particular</th>
+
+              <th>Requested Qty</th>
+
+              <th>Delivered Qty</th>
+
+              <th>Used Qty</th>
+
+              <th>Remaining Qty</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="remainingTbody"></tbody>
+
+        </table>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button class="btn exit-btn" id="closeRemainingBtn">Exit</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Usage Modal -->
+
+  <div class="modal" id="usageModal" aria-hidden="true">
+
+    <div class="card large-card">
+
+      <h2>⚙️ Usage</h2>
+
+      <div style="display:flex; gap:10px; margin-bottom:8px; flex-wrap:wrap;">
+
+        <button class="btn" id="addUsageBtn">➕ Add Usage</button>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table id="usageTable">
+
+          <thead>
+
+            <tr>
+
+              <th>Particular</th>
+
+              <th>Unit</th>
+
+              <th>Qty Used</th>
+
+              <th>Date Used</th>
+
+              <th>Remarks</th>
+
+              <th>Actions</th> <!-- Edit Remarks -->
+
+            </tr>
+
+          </thead>
+
+          <tbody id="usageTbody"></tbody>
+
+        </table>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button class="btn exit-btn" id="closeUsageBtn">Exit</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Add/Edit Usage Modal (select request) -->
+
+  <div class="modal" id="editUsageModal" aria-hidden="true">
+
+    <div class="card">
+
+      <h2 id="editUsageTitle">Add Usage</h2>
+
+      <label>Select Request (optional)</label>
+
+      <select id="usageRequestSelect"><option value="">-- Select a submitted request --</option></select>
+
+      <label>Particular</label>
+
+      <input id="editUsageParticular" />
+
+      <label>Unit</label>
+
+      <input id="editUsageUnit" />
+
+      <label>Quantity</label>
+
+      <input id="editUsageQty" type="number" min="1" />
+
+      <label>Remarks</label>
+
+      <input id="editUsageRemarks" />
+
+      <div class="modal-actions">
+
+        <button class="btn" id="saveUsageBtn">Save</button>
+
+        <button class="btn exit-btn" id="cancelEditUsageBtn">Cancel</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- History Modal -->
+
+  <div class="modal" id="historyModal" aria-hidden="true">
+
+    <div class="card large-card">
+
+      <h2>🕓 History Usage (Monthly Totals)</h2>
+
+      <div class="table-wrap">
+
+        <table id="historyTable">
+
+          <thead>
+
+            <tr><th>Particular</th><th>Month</th><th>Total Used</th></tr>
+
+          </thead>
+
+          <tbody id="historyTbody"></tbody>
+
+        </table>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button class="btn exit-btn" id="closeHistoryBtn">Exit</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="toast"></div>
+
+  <script type="module" src="script.js"></script>
+
+</body>
+
+</html>
+    <script type="module" src="./script.js"></script>
+
+  </body>
+  
+</html>

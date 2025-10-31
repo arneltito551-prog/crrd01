@@ -1,0 +1,127 @@
+/* Base / Layout */
+
+* { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins",sans-serif; }
+
+body {
+
+  color:#fff;
+
+  min-height:100vh;
+
+  background: url('https://i.postimg.cc/WzV0Ptqm/ems-c-HJk-LWVtcy1hc3Nld-HMvb-W92a-WVz-L2Q3Mzc1YWQ5LTIz-YTQt-NDY3My04Ym-Vj-LTNk-M2Vh-ZDg1NTE1NS5qc-Gc.jpg') center/cover no-repeat;
+
+  position:relative; overflow-x:hidden;
+
+}
+
+.background-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.55); z-index:-1; }
+
+/* Header */
+
+.header { text-align:center; padding:22px 12px; }
+
+.logo { width:82px; height:82px; border-radius:50%; box-shadow:0 0 20px gold; }
+
+.title { margin-top:10px; color:gold; font-size:1.45rem; text-shadow:0 0 10px rgba(255,215,0,0.7); }
+
+/* Dashboard Buttons */
+
+.dashboard { display:flex; flex-direction:column; gap:14px; align-items:center; margin-top:36px; padding:0 12px; }
+
+.btn {
+
+  width:84%; max-width:420px; padding:12px 14px; border-radius:12px; border:none; cursor:pointer;
+
+  background: linear-gradient(135deg,#d4af37,#8b6b00); color:#fff; font-weight:700; box-shadow:0 6px 16px rgba(255,215,0,0.22);
+
+  transition:all .22s ease;
+
+}
+
+.btn:hover { transform:scale(1.03); background: linear-gradient(135deg,#f5d142,#a57900); }
+
+/* Modals */
+
+/* The modal container covers full viewport; we'll force cards to become fullscreen when modal is opened.
+
+   We use class 'fullscreen' on .modal (added/removed by JS) to expand the .card to fill the screen */
+
+.modal { position:fixed; inset:0; display:none; justify-content:center; align-items:center; background:rgba(0,0,0,0.78); z-index:30; padding:20px; }
+
+.card { width:92%; max-width:460px; background: rgba(255,255,255,0.06); padding:18px; border-radius:14px; backdrop-filter: blur(10px); box-shadow:0 10px 30px rgba(0,0,0,0.6), 0 0 22px rgba(255,215,0,0.08); }
+
+.large-card { max-width:1000px; max-height:82vh; overflow:auto; padding:16px; }
+
+/* FULLSCREEN variant for modal cards */
+
+.modal.fullscreen { align-items:stretch; padding:0; }
+
+.modal.fullscreen .card {
+
+  width:100%; max-width:100%; height:100%; max-height:100vh; border-radius:0; padding:22px;
+
+  display:flex; flex-direction:column; gap:12px;
+
+}
+
+.modal.fullscreen .card .table-wrap { flex:1 1 auto; overflow:auto; } /* let tables expand */
+
+.modal.fullscreen .card h2 { margin-bottom:8px; }
+
+/* Form inputs */
+
+.card h2 { text-align:center; color:gold; margin-bottom:12px; font-size:1.15rem; }
+
+.card label { color:#fff; display:block; margin-top:8px; font-size:0.92rem; }
+
+.card input, .card select, .card textarea { width:100%; padding:8px 10px; margin-top:6px; border-radius:8px; border:none; font-size:0.95rem; outline:none; background: rgba(255,255,255,0.06); color: #fff; }
+
+/* Actions */
+
+.modal-actions { display:flex; justify-content:space-between; gap:8px; margin-top:14px; align-items:center; flex-wrap:wrap; }
+
+.exit-btn { background:crimson; }
+
+/* Tables */
+
+.table-wrap { overflow:auto; margin-top:6px; max-height:60vh; }
+
+table { width:100%; border-collapse:collapse; text-align:center; font-size:0.93rem; }
+
+thead th { position:sticky; top:0; background: rgba(0,0,0,0.5); color:gold; padding:10px; z-index:2; font-weight:700; }
+
+tbody td { padding:10px; border-bottom:1px solid rgba(255,255,255,0.06); color:#fff; vertical-align:middle; }
+
+table th, table td { min-width:80px; text-align:center; }
+
+/* Small action buttons inside tables */
+
+.table-btn { padding:6px 8px; border-radius:8px; border:none; cursor:pointer; font-size:0.85rem; margin:0 4px; }
+
+.small-mark { background: linear-gradient(135deg,#5bc0de,#2a9fd6); color:#fff; }
+
+.small-complete { background: linear-gradient(135deg,#5cb85c,#3d8b3d); color:#fff; }
+
+.small-edit { background: linear-gradient(135deg,#f0ad4e,#d68b2e); color:#fff; }
+
+/* Toast */
+
+#toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%); background:rgba(0,0,0,0.8); color:#fff; padding:10px 14px; border-radius:8px; visibility:hidden; z-index:60; }
+
+#toast.show { visibility:visible; animation: fadein .4s, fadeout .4s 2.6s; }
+
+@keyframes fadein { from {opacity:0; transform:translateX(-50%) translateY(10px);} to {opacity:1; transform:translateX(-50%) translateY(0);} }
+
+@keyframes fadeout { to {opacity:0; transform:translateX(-50%) translateY(10px);} }
+
+/* responsive */
+
+@media(min-width:900px) {
+
+  .dashboard { flex-direction:row; gap:12px; justify-content:center; margin-top:48px; }
+
+  .btn { width:200px; }
+
+  .card { max-width:760px; }
+
+}
